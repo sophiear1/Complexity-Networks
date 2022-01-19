@@ -1,4 +1,5 @@
-#%% Imports
+#%% 
+"""Imports"""
 import numpy as np
 import scipy as sp
 import matplotlib.pyplot as plt
@@ -7,6 +8,7 @@ from matplotlib import style
 style.use('dark_background')
 
 #%%Class definitions
+"""Oslo Model Class"""
 
 class Oslo():
 
@@ -81,16 +83,35 @@ class Oslo():
 
         
 #%%
+"""Task 2a
+    Height against Time for Oslo models with different L """
 L = [4,8,16,32,64,128,256, 512]
+plt.rc('font', family='serif', size = '14')
+plt.rc('xtick', labelsize='small')
+plt.rc('ytick', labelsize='small')
+
+fig = plt.figure(figsize=(8, 6))
+ax = fig.add_subplot(1, 1, 1)
+
+ax.set_xlabel('Time (number of grains added')
+ax.set_ylabel('Height of the pile (grains)')
+
 for i in L:
     model = Oslo(length = i, threshold = [1,2])
-    for j in range(1000):
+    height = np.array([])
+    for j in range(2000):
         model.drop_grain()
-        
+        height = np.append(height, model.height())
+    
+    ax.plot(range(len(height)), height)
+
+ax.legend(['4', '8', '16', '32', '64', '128', '256', '512'])
+plt.show()
 
 
 #%% 
-"""Set test as given by document"""
+""" Task 1
+    Set test as given by document"""
 model = Oslo(length = 16, threshold = [1,2])
 height = np.array([])
 for i in range(10000):
